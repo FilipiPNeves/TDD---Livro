@@ -72,16 +72,6 @@ class MoneyApplicationTests {
 		assertEquals(Money.dollar(1), result);
 	}
 
-	/* 
-	//verificar uma suposição sobre a operação de Java
-	// Este teste documenta que assertEquals com arrays não funciona
-    // Arrays são comparados por referência, não por conteúdo
-	@Test
-	public void testArrayEquals() {
-		assertEquals(new Object[] {"abc"}, new Object[] {"abc"});
-	}
-	*/
-
 	@Test
 	public void testMixedAddition() {
 		Expression fiveBucks= Money.dollar(5);
@@ -91,4 +81,27 @@ class MoneyApplicationTests {
 		Money result= bank.reduce(fiveBucks.plus(tenFrancs), "USD");
 		assertEquals(Money.dollar(10), result);
 	}
+
+	@Test
+	public void testSumPlusMoney() {
+		Expression fiveBucks= Money.dollar(5);
+		Expression tenFrancs= Money.franc(10);
+		Bank bank= new Bank();
+		bank.addRate("CHF", "USD", 2);
+		Expression sum= new Sum(fiveBucks, tenFrancs).plus(fiveBucks);
+		Money result= bank.reduce(sum, "USD");
+		assertEquals(Money.dollar(15), result);
+	}
+
+	@Test
+	public void testSumTimes() {
+		Expression fiveBucks= Money.dollar(5);
+		Expression tenFrancs= Money.franc(10);
+		Bank bank= new Bank();
+		bank.addRate("CHF", "USD", 2);
+		Expression sum= new Sum(fiveBucks, tenFrancs).times(2);
+		Money result= bank.reduce(sum, "USD");
+		assertEquals(Money.dollar(20), result);
+	}
+
 }

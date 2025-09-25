@@ -18,7 +18,7 @@ public class Money implements Expression {
     static Money franc(int amount) {
         return new Money(amount, "CHF");
     }
-    Expression times(int multiplier) {
+    public Expression times(int multiplier) {
         return new Money(amount * multiplier, currency);
     }
     String currency() {
