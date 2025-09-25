@@ -18,7 +18,7 @@ public class Money implements Expression {
     static Money franc(int amount) {
         return new Money(amount, "CHF");
     }
-    Money times(int multiplier) {
+    Expression times(int multiplier) {
         return new Money(amount * multiplier, currency);
     }
     String currency() {
@@ -27,7 +27,7 @@ public class Money implements Expression {
     public String toString() {
         return amount + " " + currency;
     }
-    Expression plus(Money addend) {
+    public Expression plus(Expression addend) {
         return new Sum(this, addend);
     }
     public Money reduce(Bank bank, String to) {
